@@ -22,7 +22,7 @@ const displayPhones = (phones, isShowAll) => {
     showMin.classList.add("hidden");
   }
 
-  console.log('is show all',isShowAll);
+  // console.log('is show all',isShowAll);
 
   if(!isShowAll){
     phones = phones.slice(0, 12);
@@ -42,7 +42,7 @@ const displayPhones = (phones, isShowAll) => {
                             <h2 class="card-title">${phone.phone_name}</h2>
                             <p>If a dog chews shoes whose shoes does he choose?</p>
                         <div class="card-actions justify-center">
-                        <button class="btn bg-[#437a7a] text-white" onclick="showDetails('${phone.slug}')" bg-[#437a7a] text-white">Show Details</button>
+                        <button class="btn bg-[#437a7a] text-white" onclick="showDetails('${phone.slug}'); show_details_modal.showModal()" bg-[#437a7a] text-white">Show Details</button>
                         </div>
                         </div>
                     </div>
@@ -61,8 +61,39 @@ const showDetails = async (id) =>{
     // load  single phone data
     const res = await fetch(`https://openapi.programming-hero.com/api/phone/${id}`);
     const data = await res.json();
-    console.log(data);
+    phone= data.data; 
+
+    showPhoneDetails(phone);
 }
+
+
+// modal
+ const showPhoneDetails = (phone) => {
+      // show the modal 
+      // console.log(phone);
+      show_details_modal.showModal();
+
+      const phoneAllDetails =  document.getElementById('phone-details');
+      phoneAllDetails.innerHTML =`
+                    <div class="flex justify-center items-center">
+                        <img src="${phone.image}" alt="">
+                    </div>
+                    <div class="mt-5 flex flex-col gap-4 ">
+                        <h1 class="text-3xl font-bold" >${phone.name}</h1>
+                        <h1>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</h1>
+                        <h1 class="font-bold text-xl">Storage :<span class="text-xl font-normal">${phone.mainFeatures.storage}</span></h1>
+                        <h1 class="font-bold text-xl">Display Size :<span class="text-xl font-normal">${phone.mainFeatures.displaySize}</span></h1>
+                        <h1 class="font-bold text-xl">Chipset :<span class="text-xl font-normal">${phone.mainFeatures.chipSet}</span></h1>
+                        <h1 class="font-bold text-xl">Memory :<span class="text-xl font-normal">${phone.mainFeatures.memory}</span></h1>
+                        <h1 class="font-bold text-xl">Slug :<span class="text-xl font-normal">${phone.slug}</span></h1>
+                        <h1 class="font-bold text-xl">Release Date :<span class="text-xl font-normal">${phone.releaseDate}</span></h1>
+                        <h1 class="font-bold text-xl">Brand:<span class="text-xl font-normal">${phone.brand}</span></h1>
+                        <h1 class="font-bold text-xl">Gps:<span class="text-xl font-normal">${phone.others.GPS}</span></h1>
+                    </div>
+      `
+
+
+ }
 
 
 
