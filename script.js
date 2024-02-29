@@ -1,11 +1,11 @@
-const loadData = async (searchText,isShowAll) => {
+const loadData = async (searchText, isShowAll) => {
   const getData = await fetch(
     `https://openapi.programming-hero.com/api/phones?search=${searchText}`
   );
   const data = await getData.json();
   const phones = data.data;
-//   console.log(phones);
-  displayPhones(phones,isShowAll);
+  //   console.log(phones);
+  displayPhones(phones, isShowAll);
 };
 
 const displayPhones = (phones, isShowAll) => {
@@ -24,10 +24,9 @@ const displayPhones = (phones, isShowAll) => {
 
   // console.log('is show all',isShowAll);
 
-  if(!isShowAll){
+  if (!isShowAll) {
     phones = phones.slice(0, 12);
   }
-
 
   phones.forEach((phone) => {
     // 4 Step to show data
@@ -55,26 +54,27 @@ const displayPhones = (phones, isShowAll) => {
   loadingSpinnerToggle(false);
 };
 
-// More Details 
-const showDetails = async (id) =>{
-    // console.log('hello world',id);
-    // load  single phone data
-    const res = await fetch(`https://openapi.programming-hero.com/api/phone/${id}`);
-    const data = await res.json();
-    phone= data.data; 
+// More Details
+const showDetails = async (id) => {
+  // console.log('hello world',id);
+  // load  single phone data
+  const res = await fetch(
+    `https://openapi.programming-hero.com/api/phone/${id}`
+  );
+  const data = await res.json();
+  phone = data.data;
 
-    showPhoneDetails(phone);
-}
-
+  showPhoneDetails(phone);
+};
 
 // modal
- const showPhoneDetails = (phone) => {
-      // show the modal 
-      // console.log(phone);
-      show_details_modal.showModal();
+const showPhoneDetails = (phone) => {
+  // show the modal
+  // console.log(phone);
+  show_details_modal.showModal();
 
-      const phoneAllDetails =  document.getElementById('phone-details');
-      phoneAllDetails.innerHTML =`
+  const phoneAllDetails = document.getElementById("phone-details");
+  phoneAllDetails.innerHTML = `
                     <div class="flex justify-center items-center">
                         <img src="${phone.image}" alt="">
                     </div>
@@ -90,14 +90,8 @@ const showDetails = async (id) =>{
                         <h1 class="font-bold text-xl">Brand:<span class="text-xl font-normal">${phone.brand}</span></h1>
                         <h1 class="font-bold text-xl">Gps:<span class="text-xl font-normal">${phone.others.GPS}</span></h1>
                     </div>
-      `
-
-
- }
-
-
-
-
+      `;
+};
 
 // Handle search button
 function handleSearch(isShowAll) {
@@ -105,7 +99,7 @@ function handleSearch(isShowAll) {
   const searchField = document.getElementById("search-field");
   const searchText = searchField.value;
 
-  loadData(searchText,isShowAll);
+  loadData(searchText, isShowAll);
 }
 
 const loadingSpinnerToggle = (isLoading) => {
@@ -117,12 +111,10 @@ const loadingSpinnerToggle = (isLoading) => {
   }
 };
 
-
-
 // Show all Button
 
 const showAll = () => {
-    handleSearch(true);
-}
+  handleSearch(true);
+};
 
 // loadData()
