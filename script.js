@@ -22,6 +22,14 @@ const displayPhones = (phones, isShowAll) => {
     showMin.classList.add("hidden");
   }
 
+  if(phones.length === 0){
+    const div  = document.createElement('div');
+    div.innerText ="Search Did Not Match Try Another Keyword";
+    phoneContainer.appendChild(div);
+    loadingSpinnerToggle(false);
+    return;
+  }
+
   // console.log('is show all',isShowAll);
 
   if (!isShowAll) {
@@ -88,7 +96,7 @@ const showPhoneDetails = (phone) => {
                         <h1 class="font-bold text-xl">Slug :<span class="text-xl font-normal">${phone.slug}</span></h1>
                         <h1 class="font-bold text-xl">Release Date :<span class="text-xl font-normal">${phone.releaseDate}</span></h1>
                         <h1 class="font-bold text-xl">Brand:<span class="text-xl font-normal">${phone.brand}</span></h1>
-                        <h1 class="font-bold text-xl">Gps:<span class="text-xl font-normal">${phone.others.GPS}</span></h1>
+                        <h1 class="font-bold text-xl">Gps:<span class="text-xl font-normal">${phone.others?.GPS || 'Gps Not Available'}</span></h1>
                     </div>
       `;
 };
